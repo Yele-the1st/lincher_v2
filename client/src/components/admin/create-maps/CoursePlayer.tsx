@@ -16,7 +16,7 @@ const CoursePlayer: FC<CoursePlayerProps> = ({ videoUrl, title }) => {
     <div className="pt-[56%] relative">
       {!isError ? (
         <iframe
-          src={videoUrl}
+          src={`https://www.youtube.com/embed/${videoUrl}`}
           className="border-none w-full h-full absolute top-0 left-0"
           allowFullScreen={true}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
