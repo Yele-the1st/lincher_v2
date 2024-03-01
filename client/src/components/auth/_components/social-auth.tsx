@@ -15,10 +15,10 @@ export const SocialAuth = () => {
     try {
       await signIn(provider);
     } catch (error) {
-      toast.success("There was a problem.");
+      toast.error("There was a problem.");
     } finally {
       setLoading(false);
-      router.refresh();
+      router.push("/");
     }
   };
 
