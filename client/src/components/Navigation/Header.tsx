@@ -1,15 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { ThemeSwitch } from "../theme/ThemeSwitch";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { PiUserCircleFill } from "react-icons/pi";
+
 import { useSelector } from "react-redux";
-import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
-import { useSession } from "../../../node_modules/next-auth/react";
-import toast from "react-hot-toast";
+
 import { Library } from "lucide-react";
 import { Button, buttonVariants } from "../ui/button";
 import { User } from "@phosphor-icons/react";
@@ -17,7 +14,6 @@ import { UserAvatar } from "./UserAvatar";
 import { cn } from "@/lib/utils";
 import { NavItems } from "./NavItems";
 import HeaderSidebar from "./HeaderSidebar";
-import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   activeItem?: number;
@@ -28,28 +24,6 @@ const Header: FC<HeaderProps> = ({ activeItem }) => {
 
   const [scrollWidth, setScrollWidth] = useState("100%"); // Initial width
   const { user } = useSelector((state: any) => state.auth);
-  const { data } = useSession();
-  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      if (data) {
-        socialAuth({
-          email: data?.user?.email,
-          name: data?.user?.name,
-          avatar: data?.user?.image,
-        });
-      }
-    }
-    if (data !== null) {
-      if (isSuccess) {
-        toast.success("Login Successfully");
-        router.push("/");
-      }
-    }
-  }, [data, isSuccess, router, socialAuth, user]);
 
   useEffect(() => {
     const handleScroll = () => {

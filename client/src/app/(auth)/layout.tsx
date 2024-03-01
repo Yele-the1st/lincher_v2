@@ -4,10 +4,15 @@ import { ThemeSwitch } from "@/components/theme/ThemeSwitch";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
 import { Library, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function AuthLayout({
   children,
@@ -15,6 +20,29 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
+
+  const { user } = useSelector((state: any) => state.auth);
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
+    }
+    if (data !== null) {
+      if (isSuccess) {
+        toast.success("Login Successfully");
+        router.push("/");
+      }
+    }
+  }, [data, isSuccess, router, socialAuth, user]);
+
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <Button
