@@ -18,7 +18,7 @@ export const SocialAuth = () => {
       toast.error("There was a problem.");
     } finally {
       setLoading(false);
-      router.push("/");
+      router.refresh();
     }
   };
 

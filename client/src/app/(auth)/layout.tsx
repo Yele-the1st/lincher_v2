@@ -2,7 +2,8 @@
 
 import { SocialAuth } from "@/components/auth/_components/social-auth";
 import { ThemeSwitch } from "@/components/theme/ThemeSwitch";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import Protected from "@/hooks/protected";
 import { cn } from "@/lib/utils";
 import { Library, X } from "lucide-react";
 import Image from "next/image";
@@ -16,7 +17,7 @@ export default function AuthLayout({
 }>) {
   const router = useRouter();
   return (
-    <>
+    <Protected>
       <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Button
           onClick={() => router.push("/")}
@@ -80,6 +81,6 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
-    </>
+    </Protected>
   );
 }
