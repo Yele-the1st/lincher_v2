@@ -7,7 +7,6 @@ import { ThemeSwitch } from "../theme/ThemeSwitch";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { PiUserCircleFill } from "react-icons/pi";
 import { useSelector } from "react-redux";
-import { getAuthSession } from "@/lib/auth";
 import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
 import { useSession } from "../../../node_modules/next-auth/react";
 import toast from "react-hot-toast";
@@ -18,6 +17,7 @@ import { UserAvatar } from "./UserAvatar";
 import { cn } from "@/lib/utils";
 import { NavItems } from "./NavItems";
 import HeaderSidebar from "./HeaderSidebar";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   activeItem?: number;
@@ -31,6 +31,8 @@ const Header: FC<HeaderProps> = ({ activeItem }) => {
   const { data } = useSession();
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
+  const router = useRouter();
+
   useEffect(() => {
     if (!user) {
       if (data) {
@@ -41,12 +43,13 @@ const Header: FC<HeaderProps> = ({ activeItem }) => {
         });
       }
     }
-    if (data === null) {
+    if (data !== null) {
       if (isSuccess) {
         toast.success("Login Successfully");
+        router.push("/");
       }
     }
-  }, [data, isSuccess, socialAuth, user]);
+  }, [data, isSuccess, router, socialAuth, user]);
 
   useEffect(() => {
     const handleScroll = () => {
