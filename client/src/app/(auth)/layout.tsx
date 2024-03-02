@@ -34,12 +34,13 @@ export default function AuthLayout({
           avatar: data?.user?.image,
         });
       }
+      if (isSuccess) {
+        toast.success("Login Successfully");
+        router.push("/");
+      }
     }
     // if (data !== null) {
-    //   if (isSuccess) {
-    //     toast.success("Login Successfully");
-    //     router.push("/");
-    //   }
+
     // }
   }, [data, isSuccess, router, socialAuth, user]);
 
