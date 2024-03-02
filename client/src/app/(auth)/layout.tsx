@@ -35,12 +35,12 @@ export default function AuthLayout({
         });
       }
     }
-    if (data !== null) {
-      if (isSuccess) {
-        toast.success("Login Successfully");
-        router.push("/");
-      }
-    }
+    // if (data !== null) {
+    //   if (isSuccess) {
+    //     toast.success("Login Successfully");
+    //     router.push("/");
+    //   }
+    // }
   }, [data, isSuccess, router, socialAuth, user]);
 
   return (
