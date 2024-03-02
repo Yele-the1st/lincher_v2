@@ -19,9 +19,9 @@ setupListeners(store.dispatch);
 
 // call the refresh token function on every page load
 const initializeApp = async () => {
-  // await store.dispatch(
-  //   apiSlice.endpoints.loadUser.initiate({}, { forceRefetch: true })
-  // );
+  await store.dispatch(
+    apiSlice.endpoints.loadUser.initiate({}, { forceRefetch: true })
+  );
   // // Refresh token every 4 minutes (240,000 milliseconds)
   // const refreshTokenInterval = 240000;
   // const refreshToken = async () => {
