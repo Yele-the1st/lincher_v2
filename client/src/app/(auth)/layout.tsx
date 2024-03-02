@@ -35,7 +35,7 @@ export default function AuthLayout({
         });
       }
     }
-    if (data !== null) {
+    if (data === null) {
       if (isSuccess) {
         toast.success("Login Successfully");
         router.push("/");
