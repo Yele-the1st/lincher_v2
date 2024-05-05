@@ -25,6 +25,8 @@ export default function AuthLayout({
   const { data } = useSession();
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
+  console.log(data);
+
   useEffect(() => {
     if (!user) {
       if (data) {

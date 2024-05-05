@@ -4,22 +4,20 @@ import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { signIn } from "../../../../node_modules/next-auth/react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import Loader from "@/components/Loader/Loader";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const SocialAuth = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const handleSignIn = async (provider: any) => {
-    setLoading(true);
-    try {
-      await signIn(provider);
-    } catch (error) {
-      toast.error("There was a problem.");
-    } finally {
-      setLoading(false);
-      // router.refresh();
-    }
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
+  const handleSignIn = (provider: "google" | "github") => {
+    signIn(provider, {
+      // callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: callbackUrl || "/",
+    });
   };
 
   return (

@@ -25,6 +25,8 @@ const Header: FC<HeaderProps> = ({ activeItem }) => {
   const [scrollWidth, setScrollWidth] = useState("100%"); // Initial width
   const { user } = useSelector((state: any) => state.auth);
 
+  console.log(user);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;

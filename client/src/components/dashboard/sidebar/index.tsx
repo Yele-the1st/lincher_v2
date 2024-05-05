@@ -39,7 +39,7 @@ const sidebarItems = [
 ];
 
 const LogoutItem = {
-  path: "/",
+  path: "",
   name: `Logout`,
   icon: <LogOut size={16} />,
 };
