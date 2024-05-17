@@ -26,6 +26,7 @@ export default function AuthLayout({
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
   console.log(data);
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
@@ -41,9 +42,6 @@ export default function AuthLayout({
         router.push("/");
       }
     }
-    // if (data !== null) {
-
-    // }
   }, [data, isSuccess, router, socialAuth, user]);
 
   return (

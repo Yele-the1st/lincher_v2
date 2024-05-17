@@ -149,7 +149,7 @@ const LoginForm: FC<indexProps> = ({}) => {
             )}
           </div>
         </form>
-        <div className="relative">
+        {/* <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -159,7 +159,7 @@ const LoginForm: FC<indexProps> = ({}) => {
             </span>
           </div>
         </div>
-        <SocialAuth />
+        <SocialAuth /> */}
       </div>
     </div>
   );

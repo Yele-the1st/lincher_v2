@@ -2,7 +2,7 @@ import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import { signIn } from "../../../../node_modules/next-auth/react";
+import { signIn, useSession } from "../../../../node_modules/next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 
