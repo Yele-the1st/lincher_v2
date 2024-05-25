@@ -7,6 +7,7 @@ import courseModel, { IComment } from "../models/course.model";
 import mongoose from "mongoose";
 import sendMail from "../utils/sendMail";
 import notificationModel from "../models/notification.model";
+import createQuestionReplyMail from "../mails/question-reply-mail";
 
 export const uploadCourse = async (
   req: Request,
@@ -367,12 +368,13 @@ export const addAnswer = async (
         title: courseContent.title,
       };
 
+      const htmlContent = createQuestionReplyMail(data.name, data.title);
+
       try {
         await sendMail({
           email: question.user.email,
           subject: "Question reply",
-          template: "question-reply.ejs",
-          data,
+          html: htmlContent,
         });
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 500));

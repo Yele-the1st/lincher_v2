@@ -2,6 +2,7 @@ import userModel, { IUser } from "../models/user.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import jwt, { Secret } from "jsonwebtoken";
 import sendMail from "../utils/sendMail";
+import createActivationMail from "../mails/activation-mail";
 
 interface IRegistrationBody {
   name: string;
@@ -41,14 +42,15 @@ export const registerUser = async (
 
   const activationCode = activationToken.activationCode;
 
-  const data = { user: { name: userData.name }, activationCode };
+  // const data = { user: { name: userData.name }, activationCode };
+
+  const htmlContent = createActivationMail(name, activationCode);
 
   try {
     await sendMail({
       email: userData.email,
       subject: "Activate your account",
-      template: "activation-mail.ejs",
-      data,
+      html: htmlContent,
     });
 
     return activationToken; // Return the activation token

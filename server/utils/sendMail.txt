@@ -1,15 +1,15 @@
 import nodemailer, { Transporter } from "nodemailer";
+import ejs from "ejs";
+import path from "path";
 
-// Define the interface for email options
 interface EmailOptions {
   email: string;
   subject: string;
-  html: string;
+  template: string;
+  data: { [key: string]: any };
 }
 
-// Define the function to send an email
 const sendMail = async (options: EmailOptions): Promise<void> => {
-  // Create a transporter object using SMTP settings from environment variables
   const transporter: Transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || "887"),
@@ -19,21 +19,23 @@ const sendMail = async (options: EmailOptions): Promise<void> => {
       pass: process.env.SMTP_PASSWORD,
     },
   });
+  const { email, subject, template, data } = options;
 
-  // Destructure the email options
-  const { email, subject, html } = options;
+  //get the path to the email template file
 
-  // Define the mail options
+  const templatePath = path.join(__dirname, "../mails", template);
+
+  // Render the email template with EJS
+
+  const html: string = await ejs.renderFile(templatePath, data);
+
   const mailOptions = {
     from: process.env.SMTP_MAIL,
     to: email,
     subject,
     html,
   };
-
-  // Send the email
   await transporter.sendMail(mailOptions);
 };
 
-// Export the sendMail function as the default export
 export default sendMail;

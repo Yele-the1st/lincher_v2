@@ -9,6 +9,7 @@ import { redis } from "../utils/redis";
 import * as orderService from "../services/order.services";
 import { config } from "dotenv";
 import { Stripe } from "stripe";
+import createPurchaseConfirmationMail from "../mails/order-confirmation-mail";
 
 config();
 
@@ -64,17 +65,17 @@ export const createOrder = async (
     const order = await orderService.newOrder(data);
 
     const mailData = {
-      order: {
-        _id: course._id.toString().slice(0, 6),
-        name: course.name,
-        price: course.price,
-        date: new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-      },
+      _id: course._id.toString().slice(0, 6),
+      name: course.name,
+      price: course.price,
+      date: new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
     };
+
+    const htmlContent = createPurchaseConfirmationMail(mailData);
 
     user?.courses.push(course?._id);
 
@@ -105,8 +106,7 @@ export const createOrder = async (
         await sendMail({
           email: user.email,
           subject: "Order Confirmation",
-          template: "order-confirmation.ejs",
-          data: mailData,
+          html: htmlContent,
         });
       }
     } catch (error: any) {
