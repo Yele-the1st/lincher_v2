@@ -8,6 +8,7 @@ interface ITokenOptions {
   httpOnly: boolean;
   sameSite: "lax" | "strict" | "none" | undefined;
   secure?: boolean;
+  domain?: string;
 }
 
 // Parse environment variables with fallback values
@@ -22,8 +23,9 @@ export const accessTokenOptions: ITokenOptions = {
   expires: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000),
   maxAge: accessTokenExpire * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "none",
+  sameSite: "lax",
   secure: true,
+  domain: "https://lincher-v2.vercel.app",
 };
 
 export const refreshTokenOptions: ITokenOptions = {
