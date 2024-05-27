@@ -6,8 +6,11 @@ interface ITokenOptions {
   expires: Date;
   maxAge: number;
   httpOnly: boolean;
-  sameSite: "lax" | "strict" | "none" | undefined;
+  sameSite: "lax" | "strict" | "none" | undefined | boolean;
   secure?: boolean;
+  domain?: string;
+  path?: string;
+  kk?: string;
 }
 
 // Parse environment variables with fallback values
@@ -24,6 +27,8 @@ export const accessTokenOptions: ITokenOptions = {
   httpOnly: true,
   sameSite: "none",
   secure: true,
+  domain: "https://lincher-v2.onrender.com",
+  path: "/",
 };
 
 export const refreshTokenOptions: ITokenOptions = {
@@ -32,6 +37,8 @@ export const refreshTokenOptions: ITokenOptions = {
   httpOnly: true,
   sameSite: "none",
   secure: true,
+  domain: "https://lincher-v2.onrender.com",
+  path: "/",
 };
 
 export const sendToken = (user: IUser, statusCode: number, res: Response) => {
